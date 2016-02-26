@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  res.render('thanks', {variant: "one"});
+  res.redirect('/thanks?variant=one');
 });
 
 router.get('/variant', function(req, res, next) {
@@ -14,7 +14,11 @@ router.get('/variant', function(req, res, next) {
 });
 
 router.post('/variant', function(req, res, next) {
-  res.render('thanks', {variant: "two"});
+  res.redirect('/thanks?variant=two');
+});
+
+router.get('/thanks', function(req, res, next) {
+  res.render('thanks', {variant: req.query.variant});
 });
 
 module.exports = router;
