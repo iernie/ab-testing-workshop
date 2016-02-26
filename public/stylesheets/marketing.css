@@ -52,6 +52,11 @@ label {
  * -- PURE FORM STYLES --
  * Style the form inputs and labels
  */
+.pure-form {
+  margin: 50px 0 0 0;
+  text-align: center;
+}
+
 .pure-form label {
     margin: 1em 0 0;
     font-weight: bold;
@@ -62,7 +67,6 @@ label {
     border: 2px solid #ddd;
     box-shadow: none;
     font-size: 100%;
-    width: 100%;
     margin-bottom: 1em;
 }
 
@@ -71,9 +75,10 @@ label {
  * I want my pure-button elements to look a little different
  */
 .pure-button {
-    background-color: #1f8dd6;
+    background-color: #000;
     color: white;
-    padding: 0.5em 2em;
+    padding: 10px 2em 9px 2em;
+    margin: 0 0 12px 0;
     border-radius: 5px;
 }
 
@@ -189,6 +194,7 @@ a.pure-button-primary {
     /* These styles are required for the "scroll-over" effect */
     position: absolute;
     top: 87%;
+    left: 0;
     width: 100%;
     min-height: 12%;
     z-index: 2;
