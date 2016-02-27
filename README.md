@@ -48,4 +48,83 @@ Nå som vi har en goal kan vi lage ett eksperiment. Nettsiden har to forskjellig
 Nå kjører eksperimentet og du vil se resultatet etter den angitte tiden du valgte eksperimentet skulle kjøre. Dessverre kan man ikke se noe før først neste dag. Du kan derimot teste at det fungerer ved å gå inn på siden i Inkognito-vindu. Åpne ett nytt vindu hver gang og man burde fra tid til annen komme inn på den andre varianten. Du kan også fullføre formen ved å favorisere enn av variantene og du vil kunne se dette etterpå i eksperimentet. Du kan også få litt live feedback ved å gå til Conversions under Real-Time og trykke på goalen du lagde. Her vil du live se når folk er inne og hvilken variant de brukte.
 
 ## Oppgave 2: A/B testing i Google Tag Manager
-*Med Google Tag Manager kan vi A/B teste deler av en side uten å gjøre endringer på siden.*
+*Med Google Tag Manager kan vi A/B teste deler av en side uten å gjøre endringer i kildekoden.*
+
+1. Slett Google Analytics-snutten fra `views/layout.hbs` og experiments-snutten fra `views/partials/one.hbs` som ble lagt til i oppgave 1.
+2. Logg inn i din [Google Tag Manager](https://tagmanager.google.com/) konto
+3. Lag en account hvis du ikke har en passende
+4. Lag en container. Gi den URLen fra heroku som navn og typen `Web`
+5. Du kommer til å få en HTML-snutt. Legg den til i `views/layout.hbs` rett etter `<body>`-taggen. Dette er den eneste endringen du må gjøre i selve kildekoden heretter. Husk å pushe endringen til heroku.
+
+Før vi kan sette opp A/B testen må vi opprette noen variabler i Google Tag Manager.
+
+1. Gå til Variables
+2. Hak av alle under Clicks samt `Random Number` under Utilities
+3. Vi trenger også en cookie som skal lagre hvilken variant brukeren er på. Trykk på `New` under User-Defined Variables
+4. Gi variabelen navnet `Cookie`
+5. Velg `1st Party Cookie` som type
+6. Sett `variant` under Cookie name
+7. Trykk  `Save Variable`
+
+Vi trenger også en trigger som skal sende ett event til Google Analytics
+
+1. Gå til Triggers og trykk på `New`
+2. Gi den navnet `submitButton Clicked`
+3. Velg typen `Click`
+4. Velg `All Elements` under Targets
+5. Under Fire On velg `Click ID > equals > submitButton`
+
+Denne vil da kun trigges når en lenke med IDen `submitButton` blir trykket. Nå på tide å lage en variant av siden.
+
+1. Gå til Tags og trykk på `New`
+2. Velg `Custom HTML Tag` som Product
+3. Under neste steg kopier og lim inn snutten nedenfor
+4. Under Fire On velg `All Pages`
+
+```
+<script>
+  var submitButton = document.getElementById("submitButton");
+  var original = "original";
+  var variant = "variant";
+
+  var selected = original;
+
+  function setVariant() {
+    submitButton.className += " big-button";
+    return variant;
+  }
+
+  function setCookie() {
+    var d = new Date();
+    d.setTime(d.getTime() + 1000 * 60 * 60 * 24 * 730);
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = "variant=" + selected + "; " + expires + "; path=/";
+  }
+
+  if (submitButton) {
+    if (!{{Cookie}}) {
+      if ({{Random Number}} < 1073741824) {
+        selected = setVariant();
+      }
+      setCookie();
+    } else if ({{Cookie}} === variant) {
+      selected = setVariant();
+    }
+  }
+</script>
+```
+
+Det dette skriptet gjør er å finne knappen med id `submitButton`. Hvis knappen finnes sjekker den om det finnes en `Cookie` som er satt. Hvis ikke, velges det 50/50 sjanse om man får originalsiden eller variantsiden. Det er det vi trengte `Random Number` til. Så settes det en cookie med hvilken variant man er på. Skulle man gå inn i siden igjen får man samme variant. Varianten i dette tilfellet legger til classen `.big-button` til knappen.
+
+Nå trenger vi bare sende resultatet til Google Analytics.
+
+1. Lag en ny tag og gi den navnet `AB Test`
+2. Velg `Google Analytics` under Products
+3. Velg `Universal Analytics` under Tag type
+4. Under `Tracking ID` legg til IDen du lagde i Google Analytics
+5. Track type er `Event` med Category og Action henholdsvis `submit-form` og `{{Cookie}}`. Her er Category navnet vi kategoriserer eventene under. Action er varianten vi er på som vi får fra `Cookie` variabelen vi lagde. Du finner den ved å trykke på knappen ved siden av inputfeltet. Alternativt kunne du lagt til enda mer informasjon i eventet som blir sendt under Label og Value.
+6. Under Fire On velg `Click` og velg `submitButton Clicked` triggeren du lagde tidligere.
+
+Nå er det bare å trykke `Publish` for å få endringene ut på nettsiden. Du kan sjekke at den fungerer ved å åpne siden ett Inkognito-vindu. Før eller siden burde du få en stor rosa knapp i stedet for den lille svarte. Du kan trykke på knappen og velge om du vil favorisere enn av variantene.
+
+Går du tilbake til Google Analytics nå under Real-Time Events burde du se `submit-form` kategorien du lagde. Trykker du deg inn på den kan du se både hvor mange av eventene som er av hver variant og hvilken som er mest brukt.
