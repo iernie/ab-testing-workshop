@@ -40,7 +40,7 @@ Nå som vi har en goal kan vi lage ett eksperiment. Nettsiden har to forskjellig
 1. Gå inn til Reporting i [Google Analytics](https://analytics.google.com/)
 2. I sidemenyen finner du Experiments under Behaviour. Gå inn her og velg `Create experiment`
 3. Gi den navnet `AB Test` og velg `Form submitted` goalen du lagde under `Objective for this experiment`. Her kan du under Advanced også velge andre ting som lengden på eksperimentet og om trafikken skal sendes jevnt til alle variantene.
-4. På neste steg, skriv inn URLen du har fra heroku under `Original` (Husk `https://`) og under `Variantion 1` legg til `/variant` etter URLen. Her kan du legge til enda flere variants skulle du ha det.
+4. På neste steg, skriv inn URLen du har fra heroku under `Original` (husk `https://`) og under `Variation 1` legg til `/variant` etter URLen. Her kan du legge til enda flere variants skulle du ha det.
 5. I neste steg kommer du til å få en ny HTML-snutt. Denne er det viktig at du bare legger til `Original` siden din rett etter `<head>`-taggen. Jeg har gjort dette enkelt for deg. Gå til `views/partials/one.hbs` og legg snutten i mellom `{{#contentFor "pageScripts"}} {{/contentFor}}`-blokkene. Da vil denne snutten kun dukke opp på originalsiden og ingen av de andre. Husk å pushe endringene til heroku før du går videre.
 6. Siste steg validerer at den finner snuttene på nettsiden og du kan trykke `Start Experiment`
 
