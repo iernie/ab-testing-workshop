@@ -2,27 +2,23 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.render('one');
+  res.render('partials/one', {layout: 'layout'});
 });
 
 router.post('/', function(req, res, next) {
-  res.redirect('/thanks1');
+  res.redirect('/thanks?variant=one');
 });
 
 router.get('/variant', function(req, res, next) {
-  res.render('two');
+  res.render('partials/two', {layout: 'layout'});
 });
 
 router.post('/variant', function(req, res, next) {
-  res.redirect('/thanks2');
+  res.redirect('/thanks?variant=two');
 });
 
-router.get('/thanks1', function(req, res, next) {
-  res.render('thanks', {variant: "one"});
-});
-
-router.get('/thanks2', function(req, res, next) {
-  res.render('thanks', {variant: "two"});
+router.get('/thanks', function(req, res, next) {
+  res.render('partials/thanks', {variant: req.query.variant, layout: 'layout'});
 });
 
 module.exports = router;
