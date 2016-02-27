@@ -148,14 +148,6 @@ a.pure-button-primary {
     position: fixed !important;
 }
 
-.splash-container.two {
-    background: #66b61e;
-}
-
-.splash-container.two a.pure-button-primary {
-    color: #66b61e;
-}
-
 .splash {
     /* absolute center .splash within .splash-container */
     width: 80%;
