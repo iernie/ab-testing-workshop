@@ -1,14 +1,15 @@
 # ab-testing-workshop
 
 ## Installasjon
-1. Klon repo lokalt på din maskin og `cd` inn i mappen
-2. Kjør `npm install`
-3. Lag en gratis [heroku](https://www.heroku.com/) konto hvis du ikke har en
-4. Last ned [heroku toolbelt](https://toolbelt.heroku.com) til ditt operativsystem og installer denne
-5. Kjør `heroku login` og logg inn i kontoen du lagde eller hadde
-6. Kjør `heroku create` for å lage en enkel nettside på heroku
-7. Publiser nettsiden med `git push heroku master` og `heroku ps:scale web=1`
-8. Åpne nettsiden med `heroku open`
+1. Last ned og installer [node](https://nodejs.org/) hvis du ikke har det fra før av
+2. Klon repo lokalt på din maskin og `cd` inn i mappen
+3. Kjør `npm install`
+4. Lag en gratis [heroku](https://www.heroku.com/) konto hvis du ikke har en
+5. Last ned [heroku toolbelt](https://toolbelt.heroku.com) til ditt operativsystem og installer denne
+6. Kjør `heroku login` og logg inn i kontoen du lagde eller hadde
+7. Kjør `heroku create` for å lage en enkel nettside på heroku
+8. Publiser nettsiden med `git push heroku master` og `heroku ps:scale web=1`
+9. Åpne nettsiden med `heroku open`
 
 **Note**
 Hver gang du vil oppdatere nettsiden er det bare å `git commit` endringene og kjøre `git push heroku master` for å pushe endringene til heroku.
