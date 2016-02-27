@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  res.redirect('/thanks?variant=one');
+  res.redirect('/thanks1');
 });
 
 router.get('/variant', function(req, res, next) {
@@ -14,11 +14,15 @@ router.get('/variant', function(req, res, next) {
 });
 
 router.post('/variant', function(req, res, next) {
-  res.redirect('/thanks?variant=two');
+  res.redirect('/thanks2');
 });
 
-router.get('/thanks', function(req, res, next) {
-  res.render('thanks', {variant: req.query.variant});
+router.get('/thanks1', function(req, res, next) {
+  res.render('thanks', {variant: "one"});
+});
+
+router.get('/thanks2', function(req, res, next) {
+  res.render('thanks', {variant: "two"});
 });
 
 module.exports = router;
