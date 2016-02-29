@@ -1,8 +1,8 @@
 # ab-testing-workshop
 
 ## Installasjon
-1. Last ned og installer [node](https://nodejs.org/) hvis du ikke har det fra før av
-2. Klon repo lokalt på din maskin og `cd` inn i mappen
+1. Last ned og installer [git](https://git-scm.com/) og [node](https://nodejs.org/) hvis du ikke har det fra før av
+2. `git clone` repo lokalt på din maskin og `cd` inn i mappen
 3. Kjør `npm install`
 4. Lag en gratis [heroku](https://www.heroku.com/) konto hvis du ikke har en
 5. Last ned [heroku toolbelt](https://toolbelt.heroku.com) til ditt operativsystem og installer denne
